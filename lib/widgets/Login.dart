@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key, required this.onClickedSignUp}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({Key? key, required this.onClickedSignUp}) : super(key: key);
 
   final Function() onClickedSignUp;
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<Login> createState() => _LoginState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginState extends State<Login> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   @override

@@ -9,9 +9,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text("Home Page"),
-    );
-  }
+  Widget build(BuildContext context) =>
+      Scaffold(
+        appBar: AppBar(
+          title: Text("Home page"),
+        ),
+        body: Center(
+          child: Text("No task yet.."),
+        ),
+      );
 }

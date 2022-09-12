@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kickmyflutter/screens/Auth/inscription.dart';
-import 'package:kickmyflutter/screens/Auth/login.dart';
+import 'package:kickmyflutter/widgets/Inscription.dart';
+import 'package:kickmyflutter/widgets/Login.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -17,8 +17,10 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     if(isLogin){
-      return LoginScreen(onClickedSignUp :toggle);
+    
+      return Login(onClickedSignUp :toggle);
     }
-    return RegisterScreen(onClickedSignIn:toggle);
+    return Register(onClickedSignIn:toggle);
   }
+
 }
