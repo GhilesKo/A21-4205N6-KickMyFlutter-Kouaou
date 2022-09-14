@@ -1,11 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:kickmyflutter/models/DTOs/SignupRequest.dart';
+import 'package:kickmyflutter/screens/HomePage.dart';
 
 import '../services/auth_service.dart';
 
 class Register extends StatefulWidget {
-  const Register({Key? key, required this.onClickedSignIn})
-      : super(key: key);
+  const Register({Key? key, required this.onClickedSignIn}) : super(key: key);
   final Function() onClickedSignIn;
 
   @override
@@ -13,56 +14,60 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final password2Controller = TextEditingController();
-
+  String _email = '';
+  String _password = '';
+  String _password2 = '';
+  bool submitted = false;
 
   Future<void> _signUp() async {
-
-    final SignupRequest request = SignupRequest( emailController.text, passwordController.text);
-    try{
+    setState(() {
+      submitted = true;
+    });
+    final SignupRequest request = SignupRequest(_email, _password);
+    try {
       await signUp(request);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    } on DioError catch (e) {
+      final snackBar = SnackBar(content: Text(e.response?.data));
 
-    }catch(e){}
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    setState(() {
+      submitted = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Register")),
+      appBar: AppBar(title: const Text("Register")),
       body: Column(
         children: [
+          //Email TextField
           TextFormField(
-            controller: emailController,
+            onChanged: (value) => _email = value,
             decoration: const InputDecoration(hintText: 'Username'),
           ),
           TextFormField(
-            controller: passwordController,
+            onChanged: (value) => _password = value,
             decoration: const InputDecoration(hintText: 'Password'),
             obscureText: true,
           ),
           TextFormField(
-            controller: password2Controller,
+            onChanged: (value) => _password2 = value,
             decoration: const InputDecoration(hintText: 'Confirm Password'),
             obscureText: true,
           ),
           TextButton(
               onPressed: widget.onClickedSignIn, child: const Text("Login")),
-          TextButton(onPressed: _signUp , child: const Text("Register")),
+          TextButton(
+              onPressed: !submitted ? _signUp : null,
+              child: const Text("Register")),
         ],
       ),
     );
   }
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed from the
-    // widget tree.
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-
 }

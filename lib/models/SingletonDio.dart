@@ -7,6 +7,7 @@ class SingletonDio {
 
   static Dio getDio() {
     Dio dio = Dio();
+
     dio.interceptors.add(cookieManager);
     return dio;
   }

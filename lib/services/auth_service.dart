@@ -1,14 +1,18 @@
+import 'package:dio/dio.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:kickmyflutter/models/DTOs/SignupRequest.dart';
 import 'package:kickmyflutter/models/SingletonDio.dart';
 
-Future<void> signUp(SignupRequest request) async {
-  try {
-    final response =
-        await SingletonDio.getDio().post('https://kickmyb-server.herokuapp.com/api/id/signup', data: request);
+import '../models/DTOs/SigninResponse.dart';
+import '../models/SingletonUser.dart';
 
-    print(response);
-  } catch (e) {
-    print(e);
-    throw (e);
-  }
+Future<void> signUp(SignupRequest request) async {
+  //Lance une requete pour signUp
+  final response = await SingletonDio.getDio().post(
+      'https://kickmyb-server.herokuapp.com/api/id/signup',
+      data: request);
+
+  SigninResponse signInResponse = SigninResponse.fromJson(response.data);
+  SingletonUser.instance.username = signInResponse.username;
+
 }

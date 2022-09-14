@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:kickmyflutter/screens/AuthPageState.dart';
 import 'package:kickmyflutter/widgets/Login.dart';
 import 'package:kickmyflutter/screens/HomePage.dart';
 import 'package:provider/provider.dart';
 
-import 'models/User.dart';
+
+
 
 void main() {
   runApp(const MyApp());
@@ -15,31 +17,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<UserModel>.value(
-      value: UserModel(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Wrapper(),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
+      home: Wrapper(),
     );
   }
 }
 
-class Wrapper extends StatelessWidget {
+class Wrapper extends StatefulWidget {
+  const Wrapper({Key? key}) : super(key: key);
+
+  @override
+  State<Wrapper> createState() => _WrapperState();
+}
+
+class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     //return either home or authenticate widget
-    return Consumer<UserModel>(
-      builder: (context, userModel, child) {
-        if (userModel.user == null) {
-          return const AuthPage();
-        } else {
-          return const HomePage();
-        }
-      },
-    );
+    //Return login
+   return const AuthPage();
   }
 }
