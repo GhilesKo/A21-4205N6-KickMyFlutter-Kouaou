@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:kickmyflutter/models/DTOs/SignupRequest.dart';
 
-
+import '../screens/HomePage.dart';
+import '../services/auth_service.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key, required this.onClickedSignUp}) : super(key: key);
@@ -12,41 +15,50 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  String email = '';
+  String password = '';
+  bool submitted = false;
+
+  Future<void> _signIn() async {
+    setState(()=>submitted = true);
+    SignupRequest signupRequest = SignupRequest(email, password);
+    try {
+      await signIn(signupRequest);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    } on DioError catch (e) {
+      final snackBar = SnackBar(content: Text(e.response?.data));
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    setState(()=>submitted = false);
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Login"),
-
+        title: Text("Login"),
       ),
       body: Column(
         children: [
           TextFormField(
-            controller: emailController,
-          decoration: new InputDecoration(hintText: 'Username'),
-
+            onChanged: (value) => email = value,
+            decoration: new InputDecoration(hintText: 'Username'),
           ),
           TextFormField(
-              controller: passwordController,
-              decoration: new InputDecoration(hintText: 'Password'),
-              obscureText: true,
-            
+            onChanged: (value) => password = value,
+            decoration: new InputDecoration(hintText: 'Password'),
+            obscureText: true,
           ),
-          TextButton(onPressed: (){}, child: const Text("Login")),
-          TextButton(onPressed: widget.onClickedSignUp, child: const Text("Register")),
-
+          TextButton(onPressed:  !submitted ? _signIn : null, child: const Text("Login")),
+          TextButton(
+              onPressed: !submitted ? widget.onClickedSignUp : null, child: const Text("Register")),
         ],
-      ) ,
+      ),
     );
-  }
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed from the
-    // widget tree.
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
   }
 }

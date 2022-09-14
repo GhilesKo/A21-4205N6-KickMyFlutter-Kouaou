@@ -8,11 +8,20 @@ import '../models/SingletonUser.dart';
 
 Future<void> signUp(SignupRequest request) async {
   //Lance une requete pour signUp
-  final response = await SingletonDio.getDio().post(
-      'https://kickmyb-server.herokuapp.com/api/id/signup',
-      data: request);
+  // 'https://kickmyb-server.herokuapp.com/api/id/signup'
+  final response = await SingletonDio.getDio()
+      .post('http://10.0.2.2:8080/api/id/signup', data: request);
 
   SigninResponse signInResponse = SigninResponse.fromJson(response.data);
   SingletonUser.instance.username = signInResponse.username;
+}
 
+Future<void> signIn(SignupRequest request) async {
+  //Lance une request pour signIn
+  // 'https://kickmyb-server.herokuapp.com/api/id/signin'
+  final response = await SingletonDio.getDio()
+      .post('http://10.0.2.2:8080/api/id/signin', data: request);
+
+  SigninResponse signInResponse = SigninResponse.fromJson(response.data);
+  SingletonUser.instance.username = signInResponse.username;
 }

@@ -20,9 +20,8 @@ class _RegisterState extends State<Register> {
   bool submitted = false;
 
   Future<void> _signUp() async {
-    setState(() {
-      submitted = true;
-    });
+    setState(()=>submitted = true);
+
     final SignupRequest request = SignupRequest(_email, _password);
     try {
       await signUp(request);
@@ -32,12 +31,10 @@ class _RegisterState extends State<Register> {
       );
     } on DioError catch (e) {
       final snackBar = SnackBar(content: Text(e.response?.data));
-
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-    setState(() {
-      submitted = false;
-    });
+    setState(()=>submitted = false);
+
   }
 
   @override
@@ -62,7 +59,7 @@ class _RegisterState extends State<Register> {
             obscureText: true,
           ),
           TextButton(
-              onPressed: widget.onClickedSignIn, child: const Text("Login")),
+              onPressed: !submitted ? widget.onClickedSignIn : null, child: const Text("Login")),
           TextButton(
               onPressed: !submitted ? _signUp : null,
               child: const Text("Register")),
