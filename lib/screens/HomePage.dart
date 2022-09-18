@@ -17,7 +17,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<HomeItemResponse> tasks = [];
 
-  Future<void> _getTasks() async {
+  bool isLoading = false;
+
+  Future<void> _getTasks() async
+  {
+
+    setState(()=> isLoading = true);
     try {
       tasks = await getTask();
 
@@ -27,11 +32,15 @@ class _HomePageState extends State<HomePage> {
     } catch (e) {
       print(e);
     }
+
+    setState(()=> isLoading = false);
+
   }
 
   @override
   void initState() {
     super.initState();
+
     _getTasks();
   }
 
@@ -40,7 +49,15 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text("Hello ${SingletonUser.instance.username}"),
       ),
-      body: ListView.builder(
+      body: isLoading == true ? Center(
+        child: SizedBox( width: 75,height: 75,
+          child: CircularProgressIndicator(
+            strokeWidth: 5,
+
+          ),
+        ),
+
+      ) : ListView.builder(
         itemCount: tasks.length,
         itemBuilder: (context, index) {
           return ListTile(
@@ -56,7 +73,7 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: WrapCrossAlignment.center,
               direction: Axis.horizontal,
               children: [
-                Text(tasks[index].name  ),
+                Text(tasks[index].name),
                 Text(tasks[index].deadline.toString()),
               ],
             ),
@@ -66,14 +83,14 @@ class _HomePageState extends State<HomePage> {
             ),
             subtitle: Row(
               children: [
-                Text("Temps écoulé :  "),
+                const Text("Temps écoulé :  "),
                 //TODO: Ajuster la progress bar en fonction des jours restants
-                Expanded(child: LinearProgressIndicator(value: 0.8))
+                const Expanded(child: const LinearProgressIndicator(value: 0.8))
               ],
             ),
           );
         },
-      ),
+      ) ,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
@@ -81,6 +98,6 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => const AddTaskPage()),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ));
 }
