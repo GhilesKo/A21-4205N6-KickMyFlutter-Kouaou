@@ -29,8 +29,15 @@ class _LoginState extends State<Login> {
         MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } on DioError catch (e) {
-      final snackBar = SnackBar(content: Text(e.response?.data));
+      String msgErreur = e.response?.data ;
 
+      if(e.response?.data == "InternalAuthenticationServiceException"){
+        msgErreur = "Nom d'utilisateur invalide";
+      }
+      if(e.response?.data == "BadCredentialsException"){
+        msgErreur = "Mot de passe invalide";
+      }
+      final snackBar = SnackBar(content: Text(msgErreur));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
     setState(()=>submitted = false);
