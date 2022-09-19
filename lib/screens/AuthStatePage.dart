@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:kickmyflutter/widgets/Inscription.dart';
 import 'package:kickmyflutter/widgets/Login.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({Key? key}) : super(key: key);
+class AuthStatePage extends StatefulWidget {
+  const AuthStatePage({Key? key}) : super(key: key);
 
   @override
-  State<AuthPage> createState() => _AuthPageState();
+  State<AuthStatePage> createState() => _AuthStatePageState();
 }
 
-class _AuthPageState extends State<AuthPage> {
+class _AuthStatePageState extends State<AuthStatePage> {
   bool isLogin = true;
 
   void toggle() => setState(() => isLogin = !isLogin);

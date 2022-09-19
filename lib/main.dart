@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_session_manager/flutter_session_manager.dart';
-import 'package:kickmyflutter/screens/AuthPageState.dart';
-import 'package:kickmyflutter/widgets/Login.dart';
-import 'package:kickmyflutter/screens/HomePage.dart';
-import 'package:provider/provider.dart';
+import 'package:kickmyflutter/screens/AuthStatePage.dart';
 
 
 
@@ -22,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Wrapper(),
+      home: const Wrapper(),
     );
   }
 }
@@ -39,6 +35,6 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     //return either home or authenticate widget
     //Return login
-   return const AuthPage();
+   return const AuthStatePage();
   }
 }

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:kickmyflutter/models/DTOs/SignupRequest.dart';
+import 'package:kickmyflutter/models/DTOs/requests/SignupRequest.dart';
 import 'package:kickmyflutter/screens/HomePage.dart';
 
 import '../services/auth_service.dart';
@@ -20,21 +20,26 @@ class _RegisterState extends State<Register> {
   bool submitted = false;
 
   Future<void> _signUp() async {
-    setState(()=>submitted = true);
-
-    final SignupRequest request = SignupRequest(_email, _password);
-    try {
-      await signUp(request);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
-    } on DioError catch (e) {
-      final snackBar = SnackBar(content: Text(e.response?.data));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    setState(() => submitted = true);
+    if (_password != _password2) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("Les mots de passes ne correspondent pas ")));
+    } else {
+      final SignupRequest request = SignupRequest(_email, _password);
+      try {
+        await signUp(request);
+        if (mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
+        }
+      } on DioError catch (e) {
+        final snackBar = SnackBar(content: Text(e.response?.data));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
     }
-    setState(()=>submitted = false);
-
+    setState(() => submitted = false);
   }
 
   @override
@@ -59,10 +64,12 @@ class _RegisterState extends State<Register> {
             obscureText: true,
           ),
           TextButton(
-              onPressed: !submitted ? widget.onClickedSignIn : null, child: const Text("Login")),
-          TextButton(
               onPressed: !submitted ? _signUp : null,
               child: const Text("Register")),
+          TextButton(
+              onPressed: !submitted ? widget.onClickedSignIn : null,
+              child: const Text("Login")),
+
         ],
       ),
     );
