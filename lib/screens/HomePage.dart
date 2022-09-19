@@ -5,7 +5,8 @@ import 'package:kickmyflutter/models/DTOs/responses/HomeItemResponse.dart';
 import 'package:kickmyflutter/models/SingletonUser.dart';
 import 'package:kickmyflutter/screens/CreationPage.dart';
 import 'package:kickmyflutter/screens/ConsultationPage.dart';
-import 'package:kickmyflutter/services/auth_service.dart';
+import 'package:kickmyflutter/services/task_service.dart';
+import 'package:kickmyflutter/widgets/CustomDrawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> _getTasks() async {
     setState(() => isLoading = true);
     try {
-      tasks = await getTask();
+      tasks = await getTasks();
     } on DioError catch (e) {
       final snackBar = SnackBar(content: Text(e.response?.data));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -39,6 +40,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+      drawer: const CustomDrawer(),
       appBar: AppBar(
         title: Text("Hello ${SingletonUser.instance.username}"),
       ),

@@ -27,16 +27,13 @@ Future<void> signIn(SignupRequest request) async {
   SingletonUser.instance.username = signInResponse.username;
 }
 
-Future<List<HomeItemResponse>> getTask() async {
-  //Lance une request pour getTask
-  // 'http://10.0.2.2:8080/api/home'
-  final response =
-      await SingletonDio.getDio().get('https://kickmyb-server.herokuapp.com/api/home');
-  List<HomeItemResponse> tasks = [];
-  for (var task in response.data) {
-    HomeItemResponse item = HomeItemResponse.fromJson(task);
-    tasks.add(item);
-  }
+Future<void> signOut() async {
+  //Lance une request pour signIn
+  // http://10.0.2.2:8080/api/id/signout
+  await SingletonDio.getDio().post(
+      'https://kickmyb-server.herokuapp.com/api/id/signout');
 
-  return tasks;
+  SingletonUser.instance.username = null;
+
+
 }
