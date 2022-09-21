@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kickmyflutter/models/SingletonUser.dart';
 import 'package:kickmyflutter/screens/AuthStatePage.dart';
+import 'package:kickmyflutter/screens/CreationPage.dart';
+import 'package:kickmyflutter/screens/HomePage.dart';
 import 'package:kickmyflutter/services/auth_service.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -24,13 +26,27 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   Text("${SingletonUser.instance.username!}@gmail.com"),
               currentAccountPicture: Image.network(
                   "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")),
-          const ListTile(
+          ListTile(
             leading: Icon(Icons.home),
-            title: Text('home'),
+            title: Text('Accueil'),
+            onTap: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                  (Route<dynamic> route) => false);
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Ajout de tâche'),
+            onTap: () {
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const AddTaskPage()),
+                  (Route<dynamic> route) => false);
+            },
           ),
           ListTile(
             leading: const Icon(Icons.logout_outlined),
-            title: const Text('logout'),
+            title: const Text('Déconnexion'),
             onTap: () async {
               await signOut();
               if (mounted) {

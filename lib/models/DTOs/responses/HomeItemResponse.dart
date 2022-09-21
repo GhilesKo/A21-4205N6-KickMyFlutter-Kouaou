@@ -11,6 +11,7 @@ class HomeItemResponse {
   late double percentageTimeSpent;
   late DateTime deadline;
 
+
   HomeItemResponse(
     this.id,
     this.name,

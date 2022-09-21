@@ -4,6 +4,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:kickmyflutter/models/DTOs/requests/AddTaskRequest.dart';
 import 'package:kickmyflutter/services/task_service.dart';
+import 'package:kickmyflutter/widgets/CustomDrawer.dart';
 
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({Key? key}) : super(key: key);
@@ -46,8 +47,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomDrawer(),
       appBar: AppBar(
         title: const Text("Creation"),
+
       ),
       body: Column(
         children: [

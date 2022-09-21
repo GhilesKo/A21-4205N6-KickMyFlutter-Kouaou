@@ -63,8 +63,12 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ConsultationPage()),
-                        );
+                              builder: (context) =>
+                                  ConsultationPage(id: tasks[index].id)),
+                        ).then((value) async {
+                          await _getTasks();
+
+                        });
                       },
                       title: Wrap(
                         alignment: WrapAlignment.spaceBetween,
@@ -77,14 +81,18 @@ class _HomePageState extends State<HomePage> {
                       ),
                       leading: CircularProgressIndicator(
                         strokeWidth: 5,
-                        value: tasks[index].percentageDone.toDouble() / 10,
+                        value: tasks[index].percentageDone.toDouble() / 100,
                         backgroundColor: Colors.black12,
                       ),
                       subtitle: Row(
-                        children: const [
-                          Text("Temps écoulé  "),
+                        children:  [
+                          const Text("Temps écoulé  "),
                           //TODO: Ajuster la progress bar en fonction des jours restants
-                          Expanded(child: LinearProgressIndicator(value: 0.8))
+                          Expanded(child: LinearProgressIndicator(
+                              value: (tasks[index].percentageTimeSpent.toDouble() / 100 < 0)
+                              ? 1
+                              : (tasks[index].percentageTimeSpent.toDouble() / 100),backgroundColor: Colors.black26, )),
+
                         ],
                       ),
                     );
