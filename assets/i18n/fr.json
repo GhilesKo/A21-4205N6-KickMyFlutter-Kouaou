@@ -6,10 +6,28 @@
   "password": "Mot de passe",
   "confirm": "Confirmer le mot de passe",
   "hello": "Allo ",
-  "temps": "Temps Écoulé "
-
-
-
+  "temps": "Temps écoulé ",
+  "tempss": " Temps écoulé ",
+  "completed": " complété",
+  "update": "Mettre à jour",
+  "choose": "Choisir une image",
+  "save": "Sauvegarder l'image",
+  "home": "Accueil",
+  "add": "Ajout de tâche",
+  "creation": "Création",
+  "choosedate": "Choisir une date d'échéance",
+  "create": "Créer une tâche",
+  "taskname": "Nom de la tâche",
+  "select": "Selectionnez une image",
+  "changedate": "Changer la date d'échéance",
+  "loggout":"Déconnexion",
+  "same" : "Les mots de passes ne correspondent pas",
+  "invaliduser": "Nom d'utilisateur invalide",
+  "invalidpw": "Mot de passe invalide",
+  "tooshort": "Nom d'utilisateur trop court",
+  "usertaken": "Nom d'utilisateur déjà utilisé",
+  "passShort": "Mot de passe trop court",
+  "error": "Erreur"
 
 
 

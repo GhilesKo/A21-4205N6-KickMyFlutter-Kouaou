@@ -5,6 +5,8 @@ import 'package:kickmyflutter/screens/CreationPage.dart';
 import 'package:kickmyflutter/screens/HomePage.dart';
 import 'package:kickmyflutter/services/auth_service.dart';
 
+import '../i18n/intl_localization.dart';
+
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({Key? key}) : super(key: key);
 
@@ -28,7 +30,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")),
           ListTile(
             leading: Icon(Icons.home),
-            title: Text('Accueil'),
+            title: Text(Locs.of(context).trans('home')),
             onTap: () {
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const HomePage()),
@@ -37,7 +39,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           ListTile(
             leading: Icon(Icons.home),
-            title: Text('Ajout de tâche'),
+            title: Text(Locs.of(context).trans('add')),
             onTap: () {
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const AddTaskPage()),
@@ -46,7 +48,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           ListTile(
             leading: const Icon(Icons.logout_outlined),
-            title: const Text('Déconnexion'),
+            title:  Text(Locs.of(context).trans('loggout')),
             onTap: () async {
               await signOut();
               if (mounted) {

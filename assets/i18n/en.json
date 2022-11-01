@@ -4,9 +4,38 @@
   "Register": "Register",
   "username": "Username",
   "password": "Password",
-  "confirm": "Confirmer password",
+  "confirm": "Confirm password",
   "hello": "Hello ",
-  "temps": "Time spent "
+  "temps": "Time spent ",
+  "tempss": " time spent ",
+  "completed": " completed",
+  "update": "Update",
+  "choose": "Choose an image",
+  "save": "Save image",
+  "home": "Home",
+  "add": "Add task",
+  "loggout": "Loggout",
+  "creation": "Creation",
+  "choosedate": "Choose a due date",
+  "create": "Create a task",
+  "taskname": "Task name",
+  "select": "Selectionnez an image",
+  "changedate": "Change due date",
+  "same" : "The password are not the same",
+  "invaliduser": "Invalid username",
+  "invalidpw": "Invalid password",
+  "tooshort": "Username too short",
+  "usertaken": "Username already taken",
+  "passShort": "Password too short",  "error": "Error"
+
+
+
+
+
+
+
+
+
 
 
 

@@ -10,6 +10,7 @@ import 'package:kickmyflutter/models/SingletonDio.dart';
 import 'package:kickmyflutter/screens/HomePage.dart';
 import 'package:kickmyflutter/services/task_service.dart';
 
+import '../i18n/intl_localization.dart';
 import '../widgets/CustomDrawer.dart';
 
 class ConsultationPage extends StatefulWidget {
@@ -151,11 +152,11 @@ class _ConsultationPageState extends State<ConsultationPage> {
                   style: const TextStyle(fontSize: 25),
                 ),
                 Text(
-                  "${_task!.percentageDone}% complété",
+                  "${_task!.percentageDone}%" +Locs.of(context).trans('completed'),
                   style: const TextStyle(fontSize: 25),
                 ),
                 Text(
-                  "${_task!.percentageTimeSpent < 0 ? 0 : _task!.percentageTimeSpent}% temps écoulé",
+                  "${_task!.percentageTimeSpent < 0 ? 0 : _task!.percentageTimeSpent}%"+Locs.of(context).trans('tempss'),
                   style: const TextStyle(fontSize: 25),
                 ),
                 TextField(
@@ -163,16 +164,16 @@ class _ConsultationPageState extends State<ConsultationPage> {
                   onChanged: (value) => pourcentage = int.parse(value),
                 ),
                 ElevatedButton(
-                    onPressed: _updateTask, child: const Text('Mettre à jour')),
+                    onPressed: _updateTask, child:  Text(Locs.of(context).trans('update'))),
                 ElevatedButton(
-                    onPressed: getImage, child: const Text('Choisir une image'))
+                    onPressed: getImage, child:  Text(Locs.of(context).trans('choose')))
 
 
               ],
             ),
             Expanded(
               child: Column(children: [
-                Container(margin: EdgeInsets.only(top: 40),alignment: Alignment.center,child: (_task!.photoId==0 && imagePath=="")?Text("Selectionnez une image"):
+                Container(margin: EdgeInsets.only(top: 40),alignment: Alignment.center,child: (_task!.photoId==0 && imagePath=="")?Text(Locs.of(context).trans('select')):
                 (imagePath != "" )?  SizedBox(height: 300,width: 300,child: Image.file(File(imagePath))):
 SizedBox(height: 300,width: 300,child:
 CachedNetworkImage(
@@ -183,7 +184,7 @@ CachedNetworkImage(
 )
                )
                 ,
-                Expanded(child: Align(alignment: Alignment.bottomCenter,child: ElevatedButton(onPressed: sendImageTask, child: Text("Sauvegarder l'image"))))
+                Expanded(child: Align(alignment: Alignment.bottomCenter,child: ElevatedButton(onPressed: sendImageTask, child: Text(Locs.of(context).trans('save')))))
               ],),
             )
           ],

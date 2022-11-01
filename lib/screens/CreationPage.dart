@@ -6,6 +6,8 @@ import 'package:kickmyflutter/models/DTOs/requests/AddTaskRequest.dart';
 import 'package:kickmyflutter/services/task_service.dart';
 import 'package:kickmyflutter/widgets/CustomDrawer.dart';
 
+import '../i18n/intl_localization.dart';
+
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({Key? key}) : super(key: key);
 
@@ -49,14 +51,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
     return Scaffold(
       drawer: const CustomDrawer(),
       appBar: AppBar(
-        title: const Text("Creation"),
+        title:  Text(Locs.of(context).trans('creation')),
 
       ),
       body: Column(
         children: [
           TextField(
             onChanged: (value) => setState(() => _taskName = value),
-            decoration: const InputDecoration(hintText: 'Nom de la tâche'),
+            decoration:  InputDecoration(hintText: Locs.of(context).trans('taskname')),
           ),
           Text(_deadline != null ? formatter.format(_deadline!) : ''),
           TextButton(
@@ -72,15 +74,15 @@ class _AddTaskPageState extends State<AddTaskPage> {
               },
               child: Text(
                 _deadline == null
-                    ? "Choisir une date d'échéance"
-                    : "Changer la date d'échéance",
+                    ? Locs.of(context).trans('choosedate')
+                    : Locs.of(context).trans('changedate'),
                 style: const TextStyle(color: Colors.blue),
               )),
           ElevatedButton(
               //!submitted ? _signIn : null,
               onPressed: !submitted && _validation() ? _addTask : null,
-              child: const Text(
-                'Créer une tâche',
+              child:  Text(
+                Locs.of(context).trans('create'),
                 style: TextStyle(color: Colors.white),
               ))
         ],

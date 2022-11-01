@@ -35,10 +35,10 @@ class _LoginState extends State<Login> {
       String msgErreur = e.response?.data;
 
       if (e.response?.data == "InternalAuthenticationServiceException") {
-        msgErreur = "Nom d'utilisateur invalide";
+        msgErreur = Locs.of(context).trans('invaliduser');
       }
       if (e.response?.data == "BadCredentialsException") {
-        msgErreur = "Mot de passe invalide";
+        msgErreur = Locs.of(context).trans('invalidpw');
       }
       final snackBar = SnackBar(content: Text(msgErreur));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -65,10 +65,10 @@ class _LoginState extends State<Login> {
           ),
           TextButton(
               onPressed: !submitted ? _signIn : null,
-              child: const Text("Connexion")),
+              child:  Text(Locs.of(context).trans('Connexion'))),
           TextButton(
               onPressed: !submitted ? widget.onClickedSignUp : null,
-              child: const Text("Inscription")),
+              child:  Text(Locs.of(context).trans('Register'))),
         ],
       ),
     );

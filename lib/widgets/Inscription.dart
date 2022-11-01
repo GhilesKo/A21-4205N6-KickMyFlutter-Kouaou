@@ -23,8 +23,8 @@ class _RegisterState extends State<Register> {
   Future<void> _signUp() async {
     setState(() => submitted = true);
     if (_password != _password2) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text("Les mots de passes ne correspondent pas ")));
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(Locs.of(context).trans('same'))));
     } else {
       final SignupRequest request = SignupRequest(_email, _password);
       try {
@@ -36,7 +36,23 @@ class _RegisterState extends State<Register> {
           );
         }
       } on DioError catch (e) {
-        final snackBar = SnackBar(content: Text(e.response?.data));
+        String msgErreur = "";
+        if (e.response?.data == "UsernameTooShort") {
+          msgErreur = Locs.of(context).trans('tooshort');
+        } else if (e.response?.data == "UsernameAlreadyTaken") {
+          msgErreur = Locs.of(context).trans('usertaken');
+
+        } else if (e.response?.data == "PasswordTooShort") {
+          msgErreur = Locs.of(context).trans('passShort');
+
+        } else {
+
+          msgErreur = Locs.of(context).trans('error');
+
+
+        }
+SnackBar snackBar = SnackBar(content: Text(msgErreur));
+
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     }
@@ -46,31 +62,33 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:  Text(Locs.of(context).trans('Register'))),
+      appBar: AppBar(title: Text(Locs.of(context).trans('Register'))),
       body: Column(
         children: [
           //Email TextField
           TextFormField(
             onChanged: (value) => _email = value,
-            decoration:  InputDecoration(hintText: Locs.of(context).trans('username')),
+            decoration:
+                InputDecoration(hintText: Locs.of(context).trans('username')),
           ),
           TextFormField(
             onChanged: (value) => _password = value,
-            decoration:  InputDecoration(hintText: Locs.of(context).trans('password')),
+            decoration:
+                InputDecoration(hintText: Locs.of(context).trans('password')),
             obscureText: true,
           ),
           TextFormField(
             onChanged: (value) => _password2 = value,
-            decoration:  InputDecoration(hintText: Locs.of(context).trans('confirm')),
+            decoration:
+                InputDecoration(hintText: Locs.of(context).trans('confirm')),
             obscureText: true,
           ),
           TextButton(
               onPressed: !submitted ? _signUp : null,
-              child:  Text(Locs.of(context).trans('Register'))),
+              child: Text(Locs.of(context).trans('Register'))),
           TextButton(
               onPressed: !submitted ? widget.onClickedSignIn : null,
-              child:  Text(Locs.of(context).trans('Inscription'))),
-
+              child: Text(Locs.of(context).trans('Inscription'))),
         ],
       ),
     );
