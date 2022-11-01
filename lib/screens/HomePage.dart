@@ -9,6 +9,9 @@ import 'package:kickmyflutter/screens/ConsultationPage.dart';
 import 'package:kickmyflutter/services/task_service.dart';
 import 'package:kickmyflutter/widgets/CustomDrawer.dart';
 
+import '../i18n/intl_localization.dart';
+import '../widgets/CustomDrawer.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -47,9 +50,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      drawer: const CustomDrawer(),
+      drawer: CustomDrawer(),
       appBar: AppBar(
-        title: Text("Hello ${SingletonUser.instance.username}"),
+        title: Text( (Locs.of(context).trans('hello')) +"${SingletonUser.instance.username}"),
       ),
       body: isLoading
           ? const Center(
@@ -95,7 +98,7 @@ class _HomePageState extends State<HomePage> {
 
                       subtitle: Row(
                         children:  [
-                          const Text("Temps écoulé  "),
+                           Text(Locs.of(context).trans('temps')),
                           //TODO: Ajuster la progress bar en fonction des jours restants
                           Expanded(child: LinearProgressIndicator(
                               value: (tasks[index].percentageTimeSpent.toDouble() / 100 < 0)

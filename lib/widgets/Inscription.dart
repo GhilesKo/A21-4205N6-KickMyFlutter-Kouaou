@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kickmyflutter/models/DTOs/requests/SignupRequest.dart';
 import 'package:kickmyflutter/screens/HomePage.dart';
 
+import '../i18n/intl_localization.dart';
 import '../services/auth_service.dart';
 
 class Register extends StatefulWidget {
@@ -45,30 +46,30 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Register")),
+      appBar: AppBar(title:  Text(Locs.of(context).trans('Register'))),
       body: Column(
         children: [
           //Email TextField
           TextFormField(
             onChanged: (value) => _email = value,
-            decoration: const InputDecoration(hintText: 'Username'),
+            decoration:  InputDecoration(hintText: Locs.of(context).trans('username')),
           ),
           TextFormField(
             onChanged: (value) => _password = value,
-            decoration: const InputDecoration(hintText: 'Password'),
+            decoration:  InputDecoration(hintText: Locs.of(context).trans('password')),
             obscureText: true,
           ),
           TextFormField(
             onChanged: (value) => _password2 = value,
-            decoration: const InputDecoration(hintText: 'Confirm Password'),
+            decoration:  InputDecoration(hintText: Locs.of(context).trans('confirm')),
             obscureText: true,
           ),
           TextButton(
               onPressed: !submitted ? _signUp : null,
-              child: const Text("Register")),
+              child:  Text(Locs.of(context).trans('Register'))),
           TextButton(
               onPressed: !submitted ? widget.onClickedSignIn : null,
-              child: const Text("Login")),
+              child:  Text(Locs.of(context).trans('Inscription'))),
 
         ],
       ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kickmyflutter/screens/AuthStatePage.dart';
 
+import 'i18n/intl_delegate.dart';
 
 
 
@@ -14,6 +16,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        DemoDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      // TODO annoncer les locales qui sont gerees
+      supportedLocales: [
+        const Locale('en'),
+        const Locale('fr'),
+      ],
+
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:kickmyflutter/models/DTOs/requests/SignupRequest.dart';
 
+import '../i18n/intl_localization.dart';
 import '../screens/HomePage.dart';
 import '../services/auth_service.dart';
 
@@ -49,25 +50,25 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Login"),
+        title: Text(Locs.of(context).trans('Connexion')),
       ),
       body: Column(
         children: [
           TextFormField(
             onChanged: (value) => email = value,
-            decoration: const InputDecoration(hintText: 'Username'),
+            decoration:  InputDecoration(hintText: Locs.of(context).trans('username')),
           ),
           TextFormField(
             onChanged: (value) => password = value,
-            decoration: const InputDecoration(hintText: 'Password'),
+            decoration:  InputDecoration(hintText: Locs.of(context).trans('password')),
             obscureText: true,
           ),
           TextButton(
               onPressed: !submitted ? _signIn : null,
-              child: const Text("Login")),
+              child: const Text("Connexion")),
           TextButton(
               onPressed: !submitted ? widget.onClickedSignUp : null,
-              child: const Text("Register")),
+              child: const Text("Inscription")),
         ],
       ),
     );
