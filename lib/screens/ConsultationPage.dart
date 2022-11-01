@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kickmyflutter/main.dart';
 import 'package:kickmyflutter/models/DTOs/responses/HomeItemResponse.dart';
 import 'package:kickmyflutter/models/SingletonDio.dart';
+import 'package:kickmyflutter/screens/HomePage.dart';
 import 'package:kickmyflutter/services/task_service.dart';
 
 import '../widgets/CustomDrawer.dart';
@@ -25,7 +28,8 @@ class _ConsultationPageState extends State<ConsultationPage> {
    String imagePath ="";
   String imageNetworkPath ="";
   XFile? pickedImage;
-
+  Image? NetworkImage;
+  bool isLoading = true;
   _getTaskDetails() async {
     _task = await getTaskDetails(widget.id);
     setState(() {});
@@ -39,6 +43,28 @@ class _ConsultationPageState extends State<ConsultationPage> {
     } on DioError catch (e) {
       print(e);
     }
+  }
+
+  Future<Image?> getNetworkImage()  async {
+
+    isLoading = true;
+    try {
+
+      NetworkImage =  await Image.network("https://kickmyb-server.herokuapp.com/file/${_task!.photoId}");
+      isLoading = false;
+      setState(() {
+
+      });
+    } on DioError catch (e) {
+      print(e);
+      isLoading = false;
+      setState(() {
+
+      });
+    }
+
+    return NetworkImage;
+
   }
 
   
@@ -72,15 +98,21 @@ class _ConsultationPageState extends State<ConsultationPage> {
     "taskID" : widget.id.toString()
   });
 
-  Dio dio = Dio();
-  var response = await dio.post('https://kickmyb-server.herokuapp.com/file',data: formData);
-  print(response.data);
-  print(widget.id);
+
+  try {
+    await SingletonDio.getDio().post(
+        'https://kickmyb-server.herokuapp.com/file',data: formData);
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()));
+
+  } on DioError catch (e) {
+    print(e);
+  }
+
   }
 
     Future<void> getTaskImage () async {
-
-
       var response = await SingletonDio.getDio().get('https://kickmyb-server.herokuapp.com/api/detail/photo/${widget.id}');
       print(response.data.photoId);
 
@@ -142,9 +174,16 @@ class _ConsultationPageState extends State<ConsultationPage> {
               child: Column(children: [
                 Container(margin: EdgeInsets.only(top: 40),alignment: Alignment.center,child: (_task!.photoId==0 && imagePath=="")?Text("Selectionnez une image"):
                 (imagePath != "" )?  SizedBox(height: 300,width: 300,child: Image.file(File(imagePath))):
-                SizedBox(height: 300,width: 300,child: Image.network("https://kickmyb-server.herokuapp.com/file/${_task!.photoId}")))
+SizedBox(height: 300,width: 300,child:
+CachedNetworkImage(
+  imageUrl: "https://kickmyb-server.herokuapp.com/file/${_task!.photoId}",
+  placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+  errorWidget: (context, url, error) => Icon(Icons.add_a_photo),
+)
+)
+               )
                 ,
-                Expanded(child: Align(alignment: Alignment.bottomCenter,child: ElevatedButton(onPressed: sendImageTask, child: Text("Sauvegarder"))))
+                Expanded(child: Align(alignment: Alignment.bottomCenter,child: ElevatedButton(onPressed: sendImageTask, child: Text("Sauvegarder l'image"))))
               ],),
             )
           ],

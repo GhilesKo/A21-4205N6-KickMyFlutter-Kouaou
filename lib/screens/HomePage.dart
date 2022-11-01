@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -19,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   final DateFormat formatter = DateFormat('yMMMMEEEEd');
   List<HomeItemResponse> tasks = [];
   bool isLoading = false;
-
+  Image? networkImage;
   Future<void> _getTasks() async {
     setState(() => isLoading = true);
     try {
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage> {
     );
 
   }
+
 
   @override
   void initState() {
@@ -82,10 +84,15 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           Text(tasks[index].name),
                           Text(formatter.format(tasks[index].deadline)),
-                        ],
+                       CachedNetworkImage(
+                            imageUrl: "https://kickmyb-server.herokuapp.com/file/${tasks[index].photoId}?width=30",
+                            placeholder: (context, url) => CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => Icon(Icons.add_a_photo)
+
+                          )
+                          ],
                       ),
-                      leading: Container(height: 40,width: 30,child: (tasks[index].photoId != 0)?Image.network("https://kickmyb-server.herokuapp.com/file/${tasks[index].photoId}") :
-                      Container()),
+
                       subtitle: Row(
                         children:  [
                           const Text("Temps écoulé  "),
