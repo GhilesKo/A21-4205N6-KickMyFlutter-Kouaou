@@ -3,14 +3,13 @@ import 'package:json_annotation/json_annotation.dart';
 part 'HomeItemResponse.g.dart';
 
 @JsonSerializable()
-
 class HomeItemResponse {
   late int id;
   late String name;
   late int percentageDone;
   late double percentageTimeSpent;
   late DateTime deadline;
-
+  late int photoId;
 
   HomeItemResponse(
     this.id,
@@ -18,6 +17,7 @@ class HomeItemResponse {
     this.percentageDone,
     this.percentageTimeSpent,
     this.deadline,
+    this.photoId,
   );
 
   factory HomeItemResponse.fromJson(Map<String, dynamic> json) =>

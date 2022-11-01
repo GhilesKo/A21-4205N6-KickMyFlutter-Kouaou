@@ -29,7 +29,12 @@ class _HomePageState extends State<HomePage> {
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
 
-    setState(() => isLoading = false);
+
+    setState(() => isLoading = false
+
+
+    );
+
   }
 
   @override
@@ -79,11 +84,8 @@ class _HomePageState extends State<HomePage> {
                           Text(formatter.format(tasks[index].deadline)),
                         ],
                       ),
-                      leading: CircularProgressIndicator(
-                        strokeWidth: 5,
-                        value: tasks[index].percentageDone.toDouble() / 100,
-                        backgroundColor: Colors.black12,
-                      ),
+                      leading: Container(height: 40,width: 30,child: (tasks[index].photoId != 0)?Image.network("https://kickmyb-server.herokuapp.com/file/${tasks[index].photoId}") :
+                      Container()),
                       subtitle: Row(
                         children:  [
                           const Text("Temps écoulé  "),
