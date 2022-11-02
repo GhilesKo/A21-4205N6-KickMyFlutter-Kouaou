@@ -26,8 +26,13 @@
   "invalidpw": "Invalid password",
   "tooshort": "Username too short",
   "usertaken": "Username already taken",
-  "passShort": "Password too short",  "error": "Error",
+  "passShort": "Password too short",
+  "error": "Server error",
   "taskShort": "Task name too short",
-  "invalidcred": "Bad credentials"
+  "invalidcred": "Bad credentials",
+  "internet": "Server request error, verify your internet",
+  "remplir": "Please fill in the fields"
+
+
 
 }

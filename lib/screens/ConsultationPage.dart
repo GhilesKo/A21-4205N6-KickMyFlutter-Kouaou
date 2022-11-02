@@ -42,7 +42,12 @@ class _ConsultationPageState extends State<ConsultationPage> {
           'https://kickmyb-server.herokuapp.com/api/progress/${widget.id}/$pourcentage');
       Navigator.pop(context);
     } on DioError catch (e) {
-      print(e);
+      if (e.response == null) {
+        final snackBar = SnackBar(content: Text(Locs.of(context).trans('internet')));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+        return;
+      }
     }
   }
 
@@ -101,6 +106,7 @@ class _ConsultationPageState extends State<ConsultationPage> {
 
 
   try {
+
     await SingletonDio.getDio().post(
         'https://kickmyb-server.herokuapp.com/file',data: formData);
     Navigator.push(
@@ -108,7 +114,13 @@ class _ConsultationPageState extends State<ConsultationPage> {
         MaterialPageRoute(builder: (context) => const HomePage()));
 
   } on DioError catch (e) {
-    print(e);
+
+    if (e.response == null) {
+      final snackBar = SnackBar(content: Text(Locs.of(context).trans('internet')));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+      return;
+    }
   }
 
   }
@@ -184,7 +196,8 @@ CachedNetworkImage(
 )
                )
                 ,
-                Expanded(child: Align(alignment: Alignment.bottomCenter,child: ElevatedButton(onPressed: sendImageTask, child: Text(Locs.of(context).trans('save')))))
+                Expanded(child: Align(alignment: Alignment.bottomCenter,child: ElevatedButton(
+                    onPressed: sendImageTask, child: Text(Locs.of(context).trans('save')))))
               ],),
             )
           ],

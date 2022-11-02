@@ -36,6 +36,12 @@ class _RegisterState extends State<Register> {
           );
         }
       } on DioError catch (e) {
+        if (e.response == null) {
+          final snackBar = SnackBar(content: Text(Locs.of(context).trans('internet')));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+          return;
+        }
         String msgErreur = "";
         if (e.response?.data == "UsernameTooShort") {
           msgErreur = Locs.of(context).trans('tooshort');

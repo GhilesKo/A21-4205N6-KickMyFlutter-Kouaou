@@ -22,6 +22,14 @@ class _LoginState extends State<Login> {
 
   Future<void> _signIn() async {
     setState(() => submitted = true);
+    if((email == "" || email==null) && (password == "" || password==null)){
+    SnackBar snackBar = SnackBar(content: Text(Locs.of(context).trans('remplir')));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    setState(() => submitted = false);
+
+
+    return;
+    }
     SignupRequest signupRequest = SignupRequest(email, password);
     try {
       await signIn(signupRequest);
@@ -32,8 +40,14 @@ class _LoginState extends State<Login> {
         );
       }
     } on DioError catch (e) {
-      String msgErreur = e.response?.data;
+      setState(() => submitted = false);
+      if (e.response == null) {
+        final snackBar = SnackBar(content: Text(Locs.of(context).trans('internet')));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
 
+      return;
+      }
+      String msgErreur = e.response?.data;
       if (e.response?.data == "InternalAuthenticationServiceException") {
         msgErreur = Locs.of(context).trans('error');
       }
@@ -43,9 +57,9 @@ class _LoginState extends State<Login> {
       final snackBar = SnackBar(content: Text(msgErreur));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-    setState(() => submitted = false);
-  }
 
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
