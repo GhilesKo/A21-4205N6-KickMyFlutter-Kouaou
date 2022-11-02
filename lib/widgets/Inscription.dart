@@ -88,7 +88,7 @@ SnackBar snackBar = SnackBar(content: Text(msgErreur));
               child: Text(Locs.of(context).trans('Register'))),
           TextButton(
               onPressed: !submitted ? widget.onClickedSignIn : null,
-              child: Text(Locs.of(context).trans('Inscription'))),
+              child: Text(Locs.of(context).trans('Connexion'))),
         ],
       ),
     );

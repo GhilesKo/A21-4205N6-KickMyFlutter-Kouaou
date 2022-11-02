@@ -35,10 +35,10 @@ class _LoginState extends State<Login> {
       String msgErreur = e.response?.data;
 
       if (e.response?.data == "InternalAuthenticationServiceException") {
-        msgErreur = Locs.of(context).trans('invaliduser');
+        msgErreur = Locs.of(context).trans('error');
       }
       if (e.response?.data == "BadCredentialsException") {
-        msgErreur = Locs.of(context).trans('invalidpw');
+        msgErreur = Locs.of(context).trans('invalidcred');
       }
       final snackBar = SnackBar(content: Text(msgErreur));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);

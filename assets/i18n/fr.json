@@ -27,8 +27,8 @@
   "tooshort": "Nom d'utilisateur trop court",
   "usertaken": "Nom d'utilisateur déjà utilisé",
   "passShort": "Mot de passe trop court",
-  "error": "Erreur"
-
-
+  "error": "Erreur",
+  "taskShort": "Nom de la tâche trop courte",
+  "invalidcred": "Mauvais nom d'utilisateur ou mot de passe"
 
 }

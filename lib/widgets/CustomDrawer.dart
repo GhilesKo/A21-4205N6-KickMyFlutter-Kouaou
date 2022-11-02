@@ -15,17 +15,46 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
+bool loading = false;
+  void setLoading(bool state) {
+    setState(() => loading = state);
+  }
+
+
+Future<void> _signOut() async {
+
+  await signOut();
+  if (mounted) {
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => const AuthStatePage()),
+                    (Route<dynamic> route) => false);
+              }
+  SingletonUser.instance.username = null;
+
+
+}
+_toggleSignOut() async{
+  try {
+    setLoading(true);
+    await _signOut();
+  } finally {
+    setLoading(false);
+
+  }
+}
+
   @override
   Widget build(BuildContext context) {
-    return Drawer(
+  return Drawer(
       child: ListView(
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-              accountName: Text(SingletonUser.instance.username!),
-              accountEmail:
-                  Text("${SingletonUser.instance.username!}@gmail.com"),
+              accountName:(SingletonUser.instance.username !=null)? Text(SingletonUser.instance.username!): Text(""),
+              accountEmail: (SingletonUser.instance.username !=null)?
+                  Text("${SingletonUser.instance.username!}@gmail.com"):Text(""),
               currentAccountPicture: Image.network(
                   "https://cdn-icons-png.flaticon.com/512/3135/3135715.png")),
           ListTile(
@@ -49,15 +78,9 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ListTile(
             leading: const Icon(Icons.logout_outlined),
             title:  Text(Locs.of(context).trans('loggout')),
-            onTap: () async {
-              await signOut();
-              if (mounted) {
-                Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                        builder: (context) => const AuthStatePage()),
-                    (Route<dynamic> route) => false);
-              }
-            },
+            enabled: !loading,
+            onTap: !loading ? _toggleSignOut : null,
+
           ),
         ],
       ),

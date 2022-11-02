@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:kickmyflutter/models/DTOs/responses/HomeItemResponse.dart';
 import 'package:kickmyflutter/models/DTOs/requests/SignupRequest.dart';
 import 'package:kickmyflutter/models/SingletonDio.dart';
@@ -30,10 +33,11 @@ Future<void> signIn(SignupRequest request) async {
 Future<void> signOut() async {
   //Lance une request pour signIn
   // http://10.0.2.2:8080/api/id/signout
-  await SingletonDio.getDio().post(
-      'https://kickmyb-server.herokuapp.com/api/id/signout');
 
-  SingletonUser.instance.username = null;
+    await SingletonDio.getDio().post(
+        'https://kickmyb-server.herokuapp.com/api/id/signout');
+
+    //SingletonUser.instance.username = null;
 
 
 }

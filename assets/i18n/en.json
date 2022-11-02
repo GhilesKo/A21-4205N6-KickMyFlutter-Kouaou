@@ -14,7 +14,7 @@
   "save": "Save image",
   "home": "Home",
   "add": "Add task",
-  "loggout": "Loggout",
+  "loggout": "Logout",
   "creation": "Creation",
   "choosedate": "Choose a due date",
   "create": "Create a task",
@@ -26,19 +26,8 @@
   "invalidpw": "Invalid password",
   "tooshort": "Username too short",
   "usertaken": "Username already taken",
-  "passShort": "Password too short",  "error": "Error"
-
-
-
-
-
-
-
-
-
-
-
-
-
+  "passShort": "Password too short",  "error": "Error",
+  "taskShort": "Task name too short",
+  "invalidcred": "Bad credentials"
 
 }

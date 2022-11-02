@@ -39,7 +39,19 @@ class _AddTaskPageState extends State<AddTaskPage> {
         Navigator.pop(context);
       }
     } on DioError catch (e) {
-      final snackBar = SnackBar(content: Text(e.response?.data));
+      String msgErreur = "";
+      if(e.response?.data == "TooShort")
+        {
+          msgErreur = (Locs.of(context).trans('taskShort'));
+
+        }
+      else
+        {
+          msgErreur = e.response?.data;
+
+        }
+
+      final snackBar = SnackBar(content: Text(msgErreur));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
 
